@@ -51,8 +51,7 @@ pipeline {
                     [
                         [
                         artifactId: 'springboot', 
-                        classifier: '', 
-                        file: 'target/Uber.jar', 
+                        classifier: '', file: 'target/Uber.jar', 
                         type: 'jar'
                         ]
                     ], 
@@ -62,7 +61,7 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'demoapp-release', 
-                    version: "${readPomVersion.version}"
+                    version: '${readPomVersion.version}'
 
                 }
             }
