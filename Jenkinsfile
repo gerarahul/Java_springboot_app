@@ -1,4 +1,4 @@
-pipeline{
+pipeline {
     agent{
         label "slave"
     }
@@ -25,20 +25,23 @@ pipeline{
         }
         stage('Static code analysis'){
             steps{
-                   withSonarQubeEnv(credentialsId: 'Sonar-api-key'){
-                    sh 'mvn clean package sonar:sonar'
-                   }
+                script{
+                    withSonarQubeEnv(credentialsId: 'Sonar-api-key'){
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                }
             }
         }
-    post{
-        always{
+        post{
+            always{
             echo "========always========"
-        }
-        success{
+            }
+            success{
             echo "========pipeline executed successfully ========"
-        }
-        failure{
+            }
+            failure{
             echo "========pipeline execution failed========"
+            }
         }
     }
 }
