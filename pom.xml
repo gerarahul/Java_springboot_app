@@ -11,7 +11,7 @@
 	<!-- Use below groupID, artifactID, Version to generate script for nexus artifact uploader -->
 	<groupId>com.example</groupId>
 	<artifactId>springboot</artifactId>
-	<version>1.0.7-SNAPSHOT</version>
+	<version>1.0.8-SNAPSHOT</version>
 	<name>springboot</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
