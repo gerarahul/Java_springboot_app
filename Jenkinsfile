@@ -1,4 +1,4 @@
-pipeline{
+pipeline {
     agent{
         label "slave"
     }
@@ -6,14 +6,6 @@ pipeline{
         stage("Git Checkout"){
             steps{
                 git branch: 'main', url: 'https://github.com/gerarahul/sample--project.git'
-            }
-        }
-        stage('reading xml'){
-            steps{
-                readxml = readMavenPom file: 'pom.xml'; 
-                echo "The value of name is: ${readxml.name}"
-                echo "The value of description is: ${readxml.description}"
-                echo "The version is: ${readxml.parent.version}"                
             }
         }
         stage("Unit Testing"){
@@ -50,11 +42,6 @@ pipeline{
         stage('Upload jar file to nexus'){
             steps{
                 script{
-
-                    def readPomVersion = readMavenPom file: 'pom.xml'
-
-                    def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "demoapp-snapshot" : "demoapp-release"
-
                     nexusArtifactUploader artifacts: 
                     [
                         [
@@ -69,8 +56,7 @@ pipeline{
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'demoapp-release', 
-                    version: '${readxml.parent.version}'
-
+                    version: '1.0.4'
                 }
             }
         }
