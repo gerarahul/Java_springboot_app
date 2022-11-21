@@ -73,8 +73,8 @@ pipeline {
             steps{
                 script{
                     withDockerRegistry(credentialsId: 'DOCKER-CRED', url: 'https://hub.docker.com/repository/docker/rgera0901/demo_application_repo')  {
-                        sh 'docker image push rgera0901/$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker image push rgera0901/$JOB_NAME:latest'
+                        sh 'docker push rgera0901/demo_application_repo:$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker push rgera0901/demo_application_repo:$JOB_NAME:latest'
                     }
                 }
             }
