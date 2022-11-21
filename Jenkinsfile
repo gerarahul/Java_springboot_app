@@ -56,7 +56,7 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'demoapp-release', 
-                    version: '1.0.8'
+                    version: '1.0.'
                 }
             }
         }
@@ -73,8 +73,8 @@ pipeline {
             steps{
                 script{
                     withDockerRegistry(credentialsId: 'DOCKER-CRED', url: 'https://hub.docker.com/repository/docker/rgera0901/demo_application_repo')  {
-                        sh 'docker push rgera0901/demo_application_repo:$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker push rgera0901/demo_application_repo:$JOB_NAME:latest'
+                        sh 'docker image push $JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker image push $JOB_NAME:latest'
                     }
                 }
             }
