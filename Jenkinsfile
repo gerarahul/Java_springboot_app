@@ -2,6 +2,9 @@ pipeline {
     agent{
         label "slave"
     }
+    environment {     
+    DOCKERHUB_CREDENTIALS= credentials('docker_hub_credentials')     
+    }
     stages{
         stage("Git Checkout"){
             steps{
@@ -66,19 +69,23 @@ pipeline {
                     sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:v1.$BUILD_ID'
                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:latest'
+                    echo 'image build succesfully'
                 }
             }
-        }   
+        }
+        stage('Login to Docker Hub'){      
+            steps{                            
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                 
+                echo 'Login Completed'                
+            }           
+        }  
         stage("Push image to docker hub"){
             steps{
-                script{
-                    withDockerRegistry(credentialsId: 'DOCKER-CRED', url: 'https://hub.docker.com/repository/docker/rgera0901/demo_application_repo')  {
-                        sh 'docker image push $JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker image push $JOB_NAME:latest'
-                    }
+                sh 'docker image push $JOB_NAME:v1.$BUILD_ID'
+                sh 'docker image push $JOB_NAME:latest'
+                echo "Image pushed to docker_hub successfully"
                 }
-            }
-        } 
+        }
     }
 }
 
