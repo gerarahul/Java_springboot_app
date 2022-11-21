@@ -7,15 +7,15 @@ pipeline {
             steps{
                 git branch: 'main', url: 'https://github.com/gerarahul/sample--project.git'
             }
+        }
         stage('reading xml'){
             steps{
                 readxml = readMavenPom file: ''; 
                 def name_var = readxml.name;
                 echo "The value of name is: ${name_var}"
                 echo "The value of description is: ${readxml.description}"
-                echo "The version is: ${readxml.parent.version}"
+                echo "The version is: ${readxml.parent.version}"                
             }
-        }
         }
         stage("Unit Testing"){
             steps{
