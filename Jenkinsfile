@@ -1,4 +1,4 @@
-pipeline {
+pipeline{
     agent{
         label "slave"
     }
@@ -10,9 +10,8 @@ pipeline {
         }
         stage('reading xml'){
             steps{
-                readxml = readMavenPom file: ''; 
-                def name_var = readxml.name;
-                echo "The value of name is: ${name_var}"
+                readxml = readMavenPom file: 'pom.xml'; 
+                echo "The value of name is: ${readxml.name}"
                 echo "The value of description is: ${readxml.description}"
                 echo "The version is: ${readxml.parent.version}"                
             }
