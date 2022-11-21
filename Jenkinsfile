@@ -67,22 +67,23 @@ pipeline {
             steps{
                 script{
                     sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
-                    sh 'docker image tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:v1.$BUILD_ID'
-                    sh 'docker image tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:latest'
+                    sh 'docker tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:v1.$BUILD_ID'
+                    sh 'docker tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:latest'
                     echo 'Docker Image build succesfully'
                 }
             }
         }
         stage('Login to Docker Hub'){      
-            steps{                            
+            steps{
+                sh 'docker logout'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                 
                 echo 'Login Completed'                
             }           
         }  
         stage("Push image to docker hub"){
             steps{
-                sh 'docker image push $JOB_NAME:v1.$BUILD_ID'
-                sh 'docker image push $JOB_NAME:latest'
+                sh 'docker push rgera0901/$JOB_NAME:v1.$BUILD_ID'
+                sh 'docker push rgera0901/$JOB_NAME:latest'
                 echo "Image pushed to docker_hub successfully"
                 }
         }
