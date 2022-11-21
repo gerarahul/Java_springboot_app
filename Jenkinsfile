@@ -3,7 +3,7 @@ pipeline {
         label "slave"
     }
     environment {     
-    DOCKERHUB_CREDENTIALS= credentials('docker_hub_credentials')     
+    DOCKERHUB_CREDENTIALS= credentials('docker_credentials')     
     }
     stages{
         stage("Git Checkout"){
@@ -59,7 +59,7 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'demoapp-release', 
-                    version: '1.0.9'
+                    version: '1.2.0'
                 }
             }
         }
@@ -69,13 +69,13 @@ pipeline {
                     sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:v1.$BUILD_ID'
                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:latest'
-                    echo 'image build succesfully'
+                    echo 'Docker Image build succesfully'
                 }
             }
         }
         stage('Login to Docker Hub'){      
             steps{                            
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                 
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                 
                 echo 'Login Completed'                
             }           
         }  
@@ -88,5 +88,3 @@ pipeline {
         }
     }
 }
-
-
