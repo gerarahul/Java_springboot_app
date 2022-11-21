@@ -73,8 +73,8 @@ pipeline {
             steps{
                 script{
                     withCredentials(
-                        [usernameColonPassword(credentialsId: 'docker_hub_credentials', variable: 'docker_hub_credentials')]) {
-                        sh 'docker login -u rgera0901 ${docker_hub_credentials}'
+                        [usernameColonPassword(credentialsId: 'docker_cred', variable: 'docker-jenkins-auth')]) {
+                        sh 'docker login -u rgera0901 ${docker-jenkins-auth}'
                     }
                 }
             }
