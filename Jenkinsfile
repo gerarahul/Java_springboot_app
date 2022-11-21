@@ -7,6 +7,15 @@ pipeline {
             steps{
                 git branch: 'main', url: 'https://github.com/gerarahul/sample--project.git'
             }
+        stage('reading xml'){
+            steps{
+                readxml = readMavenPom file: ''; 
+                def name_var = readxml.name;
+                echo "The value of name is: ${name_var}"
+                echo "The value of description is: ${readxml.description}"
+                echo "The version is: ${readxml.parent.version}"
+            }
+        }
         }
         stage("Unit Testing"){
             steps{
@@ -45,7 +54,7 @@ pipeline {
 
                     def readPomVersion = readMavenPom file: 'pom.xml'
 
-                    
+                    def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "demoapp-snapshot" : "demoapp-release"
 
                     nexusArtifactUploader artifacts: 
                     [
@@ -61,10 +70,12 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'demoapp-release', 
-                    version: '${readPomVersion.version}'
+                    version: '${readxml.parent.version}'
 
                 }
             }
         }
     }
 }
+
+
