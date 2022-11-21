@@ -72,9 +72,9 @@ pipeline {
         stage("Push image to docker hub"){
             steps{
                 script{
-                    withCredentials(
-                        [usernameColonPassword(credentialsId: 'docker_cred', variable: 'docker-jenkins-auth')]) {
-                        sh 'docker login -u rgera0901 ${docker-jenkins-auth}'
+                    withDockerRegistry(credentialsId: 'DOCKER-CRED', url: 'https://hub.docker.com/repository/docker/rgera0901/demo_application_repo')  {
+                        sh 'docker image push rgera0901/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker image push rgera0901/$JOB_NAME:latest'
                     }
                 }
             }
