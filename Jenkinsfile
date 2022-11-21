@@ -68,7 +68,17 @@ pipeline {
                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID rgera0901/$JOB_NAME:latest'
                 }
             }
-        }    
+        }   
+        stage("Push image to docker hub"){
+            steps{
+                script{
+                    withCredentials(
+                        [usernameColonPassword(credentialsId: 'docker_hub_credentials', variable: 'docker_hub_credentials')]) {
+                        sh 'docker login -u rgera0901 ${docker_hub_credentials}'
+                    }
+                }
+            }
+        } 
     }
 }
 
