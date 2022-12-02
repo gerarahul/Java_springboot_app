@@ -30,5 +30,25 @@ pipeline {
                 echo "connection to eks cluster is succesfuly happened"
             }
         }
+
+        stage("Deployment On Eks"){
+            when {expression { params.action == 'create'}}
+            steps{
+                script{
+                    def apply = false
+                    try{
+                        input message 'please confirm the apply to initiate the deployments', ok: 'ready to apply the config'
+                        apply = true
+                    }
+                    catch(err){
+                        apply = false
+                        CurrentBuild.result = "UNSTABLE"
+                    }
+                    if(apply){
+                        sh "kubectl apply -f ."
+                    }
+                }
+            }
+        }
     }
 }
