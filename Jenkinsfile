@@ -46,6 +46,7 @@ pipeline {
                     }
                     if(apply){
                         sh "kubectl apply -f ."
+                        echo "Deployed on Eks cluster"
                     }
                 }
             }
@@ -65,6 +66,7 @@ pipeline {
                     }
                     if(apply){
                         sh "kubectl delete -f ."
+                        echo "Deployments is deleted or destroyed"
                     }
                 }
             }
