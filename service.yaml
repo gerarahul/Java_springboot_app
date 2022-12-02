@@ -9,6 +9,6 @@ spec:
     app: myspringbootapp
   type: LoadBalancer
   ports:
-    - nodePort: 31000
+    - nodePort: 32000
       port: 80
       targetPort: 9099
