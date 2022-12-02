@@ -50,5 +50,24 @@ pipeline {
                 }
             }
         }
+        stage("Delete Deployments"){
+            when {expression { params.action == 'destroy'}}
+            steps{
+                script{
+                    def destroy = false
+                    try{
+                        input message: 'please confirm the destroy to delete the deployments', ok: 'ready to destroy the config'
+                        destroy = true
+                    }
+                    catch(err){
+                        destroy = false
+                        CurrentBuild.result = "UNSTABLE"
+                    }
+                    if(apply){
+                        sh "kubectl delete -f ."
+                    }
+                }
+            }
+        }
     }
 }
