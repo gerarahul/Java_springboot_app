@@ -55,11 +55,11 @@ pipeline {
                     ], 
                     credentialsId: 'nexus-jenkins-authentiation', 
                     groupId: 'com.example', 
-                    nexusUrl: '13.233.140.223:8081', 
+                    nexusUrl: '13.233.167.76:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'demoapp-release', 
-                    version: '1.2.0'
+                    version: '1.3.0'
                 }
             }
         }
