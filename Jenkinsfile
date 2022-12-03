@@ -107,7 +107,6 @@ pipeline {
                 echo "connection to eks cluster is succesfuly happened"
             }
         }
-
         stage("Deployment On Eks"){
             when {expression { params.action == 'create'}}
             steps{
