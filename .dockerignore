@@ -1,0 +1,15 @@
+# Exclude build-related files
+target/
+
+# Exclude Maven-specific files
+.mvn/
+mvnw
+mvnw.cmd
+
+# Exclude IDE-specific files
+.idea/
+*.iml
+
+# Exclude version control files
+.git/
+.gitignore
