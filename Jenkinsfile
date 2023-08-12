@@ -3,7 +3,7 @@ pipeline {
         label "slave"
     }
     parameters {
-        choice(name: 'action', choices: 'create\ndestroy\ndestroyekscluster', description: 'create/update or destroy eks cluster')
+        choice(name: 'action', choices: ['create', 'destroy', 'destroyekscluster'], description: 'create/update or destroy eks cluster')
         string(name: 'cluster', defaultValue: 'prod_ekscluster', description: 'Eks cluster name')
         string(name: 'region', defaultValue: 'ap-south-1', description: 'Eks cluster region')
     }
